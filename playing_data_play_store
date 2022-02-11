@@ -1,0 +1,34 @@
+SELECT *
+FROM play_store_apps;
+
+SELECT DISTINCT review_count
+FROM play_store_apps
+ORDER BY review_count DESC;
+
+SELECT name, rating
+FROM play_store_apps
+WHERE rating > 4.5 AND type ILIKE 'FREE'
+GROUP BY name, rating;
+
+SELECT DISTINCT category, name, AVG(rating)
+FROM play_store_apps
+WHERE rating IS NOT null AND review_count > '40000000'
+GROUP BY name, category
+ORDER BY AVG(rating) DESC;
+
+SELECT DISTINCT category, AVG(rating)
+FROM play_store_apps
+WHERE rating > 4
+GROUP BY category
+ORDER BY AVG(rating) DESC;
+
+WITH both_stores AS (SELECT *
+					 FROM app_store_apps JOIN play_store_apps ON app_store_apps.name = play_store_apps.name)
+SELECT *
+FROM both_stores;
+
+SELECT DISTINCT name, category, ROUND(AVG(rating), 2), review_count, type
+FROM play_store_apps
+WHERE type = 'Free' AND rating > 4.5 AND review_count >1000000
+GROUP BY DISTINCT name, category, rating, review_count, type
+ORDER BY ROUND(AVG(rating), 2) DESC, review_count DESC;
