@@ -1,0 +1,20 @@
+SELECT *
+FROM app_store_apps;
+
+SELECT name, rating
+FROM play_store_apps
+WHERE rating > 4.5 AND price LIKE '0.00'
+GROUP BY name, rating;
+
+SELECT DISTINCT primary_genre
+FROM app_store_apps;
+
+SELECT DISTINCT review_count::numeric
+FROM app_store_apps
+ORDER BY review_count DESC;
+
+SELECT DISTINCT primary_genre, name, AVG(rating)
+FROM app_store_apps
+WHERE rating IS NOT null AND review_count::numeric > '1000000'
+GROUP BY name, primary_genre
+ORDER BY AVG(rating) DESC;
